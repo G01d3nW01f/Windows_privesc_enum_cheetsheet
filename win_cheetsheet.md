@@ -18,7 +18,7 @@
 		Get-ChildItem Env: | ft Key,Value
 
 ```
-	other devices has connected in drive?
+#	other devices has connected in drive?
 ```
 		net use
 		
