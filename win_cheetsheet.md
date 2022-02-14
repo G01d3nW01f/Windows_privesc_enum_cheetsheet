@@ -1,17 +1,17 @@
-	#Windows Privilege Escalation Enum Commands:
+#Windows Privilege Escalation Enum Commands:
 
 +---------------------+
 |About OperatingSystem|
 +---------------------+
 	
-	Information of OS and architecture and is it patched?
+#	Information of OS and architecture and is it patched?
 ```
 		systeminfo
 
 		wmic qfe
 ```
 
-	what the interesting in environments variables?
+#	what the interesting in environments variables?
 ```	
 		set
 
@@ -30,7 +30,7 @@
 |User|
 +----+
 
-	about of you
+#	about of you
 ```
 		whoami
 
@@ -38,11 +38,11 @@
 	
 		$env:UserName
 ```
-	interesting UserAccount
+#	interesting UserAccount
 ```
 		whoami /priv
 ```
-	is system user in? and old user profile is remainning?
+#	is system user in? and old user profile is remainning?
 ```
 		net users
 	
@@ -54,29 +54,29 @@
 
 		Get-ChildItem C:\Users-Force | select Name
 ```
-	other user is login?
+#	other user is login?
 ```
 		qwinsta
 ```
-	which group in system?
+#	which group in system?
 ```
 		net localgroup
 
 		Get-LocalGroup | ft Name
 ```
-	Find the Administrators group user
+#	Find the Administrators group user
 ```
 		net localgroup Administrators
 
 		Get-LocalGroupMember Administrators | ft Name, PrincipalSource 
 ```
-	Search to Suspiciousy something in Auto Logon registory 
+#	Search to Suspiciousy something in Auto Logon registory 
 ```
 		reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon" 2>nul | fidstr "DefaultUserName DefaultDomainName DefaultPassword"	
 		
 		Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WinLogon' | select "Default*"
 ```
-	Search to Suspiciousy Somethings in Credential Manager
+#	Search to Suspiciousy Somethings in Credential Manager
 ```
 		cmdkey /list
 
@@ -88,7 +88,7 @@
 	
 		Get-ChildItem -Hidden C:\Users\username\AppData\Roaming\Microsoft\Credentials\
 ```
-	Can Access to SAM file and System File??
+#	Can Access to SAM file and System File??
 ```		
 		%SYSTEMROOT%\repair\SAM
 
@@ -107,7 +107,7 @@
 |Program, Process, Service|
 +-------------------------+
 	
-	which software installed?
+#	which software installed?
 ```
 		dir /a "C:\Program Files"
 
@@ -119,7 +119,7 @@
 
 		Get-ChildItem -path Registry::HKEY_LOCAL_MACHINE\SOFTWARE | ft Name
 ```
-	week folder or file access allowed file
+#	week folder or file access allowed file
 ```
 		icacls "C:\Program Files\*" 2>nul | findstr "(F)" | findstr "Everyone"
 
