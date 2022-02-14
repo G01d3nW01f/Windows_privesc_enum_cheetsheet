@@ -1,49 +1,49 @@
-Windows Privilege Escalation Enum Commands:
+	#Windows Privilege Escalation Enum Commands:
 
 +---------------------+
 |About OperatingSystem|
 +---------------------+
 	
 	Information of OS and architecture and is it patched?
-
+```
 		systeminfo
 
 		wmic qfe
-
+```
 
 	what the interesting in environments variables?
-	
+```	
 		set
 
 		Get-ChildItem Env: | ft Key,Value
 
-
+```
 	other devices has connected in drive?
-
+```
 		net use
 		
 		wmic logicaldisk get caption,description,providername
 
 		Get-PSDrive | where {$_.Provider -like "Microsoft.PowerShell.Core\FileSystem"}| ft Name,Root
-
+```
 +----+
 |User|
 +----+
 
 	about of you
-
+```
 		whoami
 
 		echo %USERNAME%
 	
 		$env:UserName
-
+```
 	interesting UserAccount
-
+```
 		whoami /priv
-
+```
 	is system user in? and old user profile is remainning?
-
+```
 		net users
 	
 		dir /b /ad "C:\Users\"
@@ -53,31 +53,31 @@ Windows Privilege Escalation Enum Commands:
 		Get-LocalUser | ft Name,Enabled,LastLogon
 
 		Get-ChildItem C:\Users-Force | select Name
-
+```
 	other user is login?
-
+```
 		qwinsta
-
+```
 	which group in system?
-
+```
 		net localgroup
 
 		Get-LocalGroup | ft Name
-
+```
 	Find the Administrators group user
-
+```
 		net localgroup Administrators
 
 		Get-LocalGroupMember Administrators | ft Name, PrincipalSource 
-
+```
 	Search to Suspiciousy something in Auto Logon registory 
-
+```
 		reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon" 2>nul | fidstr "DefaultUserName DefaultDomainName DefaultPassword"	
 		
 		Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WinLogon' | select "Default*"
-
+```
 	Search to Suspiciousy Somethings in Credential Manager
-
+```
 		cmdkey /list
 
 		dir C:\Users\username\AppData\Local\Microsoft\Credentials\
@@ -87,9 +87,9 @@ Windows Privilege Escalation Enum Commands:
 		Get-ChildItem -Hidden C:\Users\username\AppData\Local\Microsoft\Credentials\
 	
 		Get-ChildItem -Hidden C:\Users\username\AppData\Roaming\Microsoft\Credentials\
-
+```
 	Can Access to SAM file and System File??
-		
+```		
 		%SYSTEMROOT%\repair\SAM
 
 		%SYSTEMROOT%\System32\config\RegBack\SAM
@@ -102,13 +102,13 @@ Windows Privilege Escalation Enum Commands:
 
 		%SYSTEMROOT%\System32\config\RegBack\system
 
-
+```
 +-------------------------+
 |Program, Process, Service|
 +-------------------------+
 	
 	which software installed?
-
+```
 		dir /a "C:\Program Files"
 
 		dir /a "C:\Program Files (x86)"
@@ -118,9 +118,9 @@ Windows Privilege Escalation Enum Commands:
 		Get-childItem 'C:\Program Files', 'C:\Program Files (x86)' | ft Parent,Name,LastWriteTime
 
 		Get-ChildItem -path Registry::HKEY_LOCAL_MACHINE\SOFTWARE | ft Name
-
+```
 	week folder or file access allowed file
-
+```
 		icacls "C:\Program Files\*" 2>nul | findstr "(F)" | findstr "Everyone"
 
 		icacls "C:\Program Files (x86)\*" 2>nul | findstr "(F)" | findstr "Everyone"
@@ -280,7 +280,7 @@ Windows Privilege Escalation Enum Commands:
 		findstr /si password *.xml *.ini *.txt *.config 2>nul
 
 		Get-ChildItem C:\* -include *.xml,*.ini,*.txt,*.config -Recurse -ErrorAction SilentlyContinue | Select-String -Pattern "password"
-		
+```		
 
 		
 		
